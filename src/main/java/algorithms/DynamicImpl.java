@@ -2,8 +2,8 @@ package algorithms;
 
 import java.util.Arrays;
 
-public class EditDistanceDynamic {
-    public int editDistanceDynamicProgramming(String initial, String target) {
+public class DynamicImpl implements EditDistanceAlgorithm {
+    public int solve(String initial, String target) {
         int[][] solutions = new int[initial.length() + 1][target.length() + 1];
         for (int i = 0; i < solutions.length; i++) {
             solutions[i][0] = i;
@@ -29,5 +29,15 @@ public class EditDistanceDynamic {
         }
 
         return solutions[initial.length()][target.length()];
+    }
+
+    @Override
+    public int numInvocations() {
+        return 0;
+    }
+
+    @Override
+    public int peakMemoryConsumption() {
+        return 0;
     }
 }

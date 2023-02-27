@@ -1,8 +1,6 @@
 package algorithms;
 
-import java.util.Arrays;
-
-public class EditDistanceIntuitive {
+public class IntuitiveImpl implements EditDistanceAlgorithm {
     private String elideLast(String s) {
         return s.substring(0, s.length() - 1);
     }
@@ -11,7 +9,7 @@ public class EditDistanceIntuitive {
         return s.charAt(s.length() - 1);
     }
 
-    int editDistanceIntuitive(String initial, String target) {
+    public int solve(String initial, String target) {
         System.out.printf("--- Edit Distance %s %s ---%n", initial, target);
         if ("".equals(initial)) {
             return target.length();
@@ -28,19 +26,29 @@ public class EditDistanceIntuitive {
 
         if (lastCharInitial == lastCharTarget) {
             System.out.printf("[Last Char Same %s %s]%n", initial, target);
-            return editDistanceIntuitive(initialSlice, targetSlice);
+            return solve(initialSlice, targetSlice);
         } else {
             String initialSwapped = initialSlice + lastCharTarget;
             System.out.printf("[Swap %s %s] %s -> %s%n", initial, target, initial, initialSwapped);
-            int substitutionSwaps = editDistanceIntuitive(initialSwapped, target) + 1;
+            int substitutionSwaps = solve(initialSwapped, target) + 1;
 
             System.out.printf("[Insert %s %s] %s -> %s%n", initial, target, initial, initial + lastCharTarget);
-            int insertSwaps = editDistanceIntuitive(initial + lastCharTarget, target) + 1;
+            int insertSwaps = solve(initial + lastCharTarget, target) + 1;
 
             System.out.printf("[Delete %s %s] %s -> %s%n", initial, target, initialSlice, target);
-            int deleteSwaps = editDistanceIntuitive(initialSlice, target) + 1;
+            int deleteSwaps = solve(initialSlice, target) + 1;
 
             return Math.min(Math.min(substitutionSwaps, insertSwaps), deleteSwaps);
         }
+    }
+
+    @Override
+    public int numInvocations() {
+        return 0;
+    }
+
+    @Override
+    public int peakMemoryConsumption() {
+        return 0;
     }
 }
