@@ -1,7 +1,9 @@
 package algorithms;
 
-public class IntuitiveImpl implements EditDistanceAlgorithm {
-    private String elideLast(String s) {
+public class IntuitiveImpl extends EditDistanceAlgorithm {
+
+
+    private String removeLastChar(String s) {
         return s.substring(0, s.length() - 1);
     }
 
@@ -10,7 +12,8 @@ public class IntuitiveImpl implements EditDistanceAlgorithm {
     }
 
     public int solve(String initial, String target) {
-        System.out.printf("--- Edit Distance %s %s ---%n", initial, target);
+        this.recordTelemetry();
+
         if ("".equals(initial)) {
             return target.length();
         }
@@ -19,36 +22,22 @@ public class IntuitiveImpl implements EditDistanceAlgorithm {
             return initial.length();
         }
 
-        String initialSlice = elideLast(initial);
-        String targetSlice = elideLast(target);
+        String initialSlice = removeLastChar(initial);
+        String targetSlice = removeLastChar(target);
         char lastCharInitial = lastChar(initial);
         char lastCharTarget = lastChar(target);
 
         if (lastCharInitial == lastCharTarget) {
-            System.out.printf("[Last Char Same %s %s]%n", initial, target);
             return solve(initialSlice, targetSlice);
         } else {
-            String initialSwapped = initialSlice + lastCharTarget;
-            System.out.printf("[Swap %s %s] %s -> %s%n", initial, target, initial, initialSwapped);
-            int substitutionSwaps = solve(initialSwapped, target) + 1;
+            String lastCharSwapped = initialSlice + lastCharTarget;
+            int substitutionSwaps = solve(lastCharSwapped, target) + 1;
 
-            System.out.printf("[Insert %s %s] %s -> %s%n", initial, target, initial, initial + lastCharTarget);
             int insertSwaps = solve(initial + lastCharTarget, target) + 1;
 
-            System.out.printf("[Delete %s %s] %s -> %s%n", initial, target, initialSlice, target);
             int deleteSwaps = solve(initialSlice, target) + 1;
 
             return Math.min(Math.min(substitutionSwaps, insertSwaps), deleteSwaps);
         }
-    }
-
-    @Override
-    public int numInvocations() {
-        return 0;
-    }
-
-    @Override
-    public int peakMemoryConsumption() {
-        return 0;
     }
 }

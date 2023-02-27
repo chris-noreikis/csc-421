@@ -1,28 +1,47 @@
 package algorithms;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class DynamicImplTest {
+    EditDistanceAlgorithm uut;
+    String initial;
+    String target;
+
+    @Before
+    public void setUp() throws Exception {
+        uut = new DynamicImpl();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        System.out.println("initial = " + initial);
+        System.out.println("target = " + target);
+        System.out.println("invocations = " + uut.numInvocations());
+        System.out.println("memory = " + uut.peakMemoryConsumption() + '\n');
+    }
+
     @Test
     public void testOne() {
-        DynamicImpl uut = new DynamicImpl();
-        assertEquals(1, uut.solve("ab", "abc"));
-        assertEquals(1, uut.solve("ab", "abc"));
+        initial = "ab";
+        target = "abc";
+        assertEquals(1, uut.solve(initial, target));
     }
 
     @Test
     public void testTwo() {
-        DynamicImpl uut = new DynamicImpl();
-        assertEquals(3, uut.solve("horse", "ros"));
-        assertEquals(3, uut.solve("horse", "ros"));
+        initial = "horse";
+        target = "ros";
+        assertEquals(3, uut.solve(initial, target));
     }
 
     @Test
     public void testThree() {
-        DynamicImpl uut = new DynamicImpl();
-        assertEquals(5, uut.solve("intention", "execution"));
-        assertEquals(5, uut.solve("intention", "execution"));
+        initial = "intention";
+        target = "execution";
+        assertEquals(5, uut.solve(initial, target));
     }
 }

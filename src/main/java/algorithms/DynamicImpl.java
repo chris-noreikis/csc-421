@@ -2,7 +2,7 @@ package algorithms;
 
 import java.util.Arrays;
 
-public class DynamicImpl implements EditDistanceAlgorithm {
+public class DynamicImpl extends EditDistanceAlgorithm {
     public int solve(String initial, String target) {
         int[][] solutions = new int[initial.length() + 1][target.length() + 1];
         for (int i = 0; i < solutions.length; i++) {
@@ -15,6 +15,7 @@ public class DynamicImpl implements EditDistanceAlgorithm {
 
         for (int i = 1; i < solutions.length; i++) {
             for (int j = 1; j < solutions[0].length; j++) {
+                this.recordTelemetry();
                 char lastCharInitial = initial.charAt(i - 1);
                 char lastCharTarget = target.charAt(j - 1);
                 int min = Math.min(
@@ -29,15 +30,5 @@ public class DynamicImpl implements EditDistanceAlgorithm {
         }
 
         return solutions[initial.length()][target.length()];
-    }
-
-    @Override
-    public int numInvocations() {
-        return 0;
-    }
-
-    @Override
-    public int peakMemoryConsumption() {
-        return 0;
     }
 }
