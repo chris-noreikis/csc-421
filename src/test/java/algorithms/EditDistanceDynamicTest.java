@@ -4,25 +4,25 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class EditDistanceTest {
+public class EditDistanceDynamicTest {
     @Test
     public void testOne() {
-        EditDistance uut = new EditDistance();
-        assertEquals(1, uut.editDistanceIntuitive("ab", "abc"));
+        EditDistanceDynamic uut = new EditDistanceDynamic();
+        assertEquals(1, uut.editDistanceDynamicProgramming("ab", "abc"));
         assertEquals(1, uut.editDistanceDynamicProgramming("ab", "abc"));
     }
 
     @Test
     public void testTwo() {
-        EditDistance uut = new EditDistance();
-        assertEquals(3, uut.editDistanceIntuitive("horse", "ros"));
+        EditDistanceDynamic uut = new EditDistanceDynamic();
+        assertEquals(3, uut.editDistanceDynamicProgramming("horse", "ros"));
         assertEquals(3, uut.editDistanceDynamicProgramming("horse", "ros"));
     }
 
     @Test
     public void testThree() {
-        EditDistance uut = new EditDistance();
-        assertEquals(5, uut.editDistanceIntuitive("intention", "execution"));
+        EditDistanceDynamic uut = new EditDistanceDynamic();
+        assertEquals(5, uut.editDistanceDynamicProgramming("intention", "execution"));
         assertEquals(5, uut.editDistanceDynamicProgramming("intention", "execution"));
     }
 }
