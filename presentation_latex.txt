@@ -1,0 +1,6 @@
+Edit(i, j) =     \begin{cases}
+      j & \text{if $i$ = 0}\\
+      i & \text{if $j$ = 0}\\
+      Edit(i -1, j - 1) & \text{if initial[$i$] == initial[$j$]}\\
+      1 + min(\\\hspace{2cm}Edit(i -1, j - 1), \\\hspace{2cm}Edit(i, j - 1), \\\hspace{2cm}Edit(i - 1, j)))\\\hspace{1cm}) & \text{otherwise}
+    \end{cases}
