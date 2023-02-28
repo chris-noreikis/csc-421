@@ -9,8 +9,8 @@ public class DynamicImpl extends EditDistanceAlgorithm {
             solutions[i][0] = i;
         }
 
-        for (int i = 0; i < solutions[0].length; i++) {
-            solutions[0][i] = i;
+        for (int j = 0; j < solutions[0].length; j++) {
+            solutions[0][j] = j;
         }
 
         for (int i = 1; i < solutions.length; i++) {
@@ -18,10 +18,11 @@ public class DynamicImpl extends EditDistanceAlgorithm {
                 this.recordTelemetry();
                 char lastCharInitial = initial.charAt(i - 1);
                 char lastCharTarget = target.charAt(j - 1);
-                int min = Math.min(
-                        Math.min(solutions[i][j - 1] + 1, solutions[i - 1][j] + 1),
-                        solutions[i - 1][j - 1] + (lastCharInitial == lastCharTarget ? 0 : 1));
-                solutions[i][j] = min;
+                solutions[i][j] = min(
+                        solutions[i][j - 1] + 1,
+                        solutions[i - 1][j] + 1,
+                        solutions[i - 1][j - 1] + (lastCharInitial == lastCharTarget ? 0 : 1)
+                );
             }
         }
 
@@ -30,5 +31,9 @@ public class DynamicImpl extends EditDistanceAlgorithm {
         }
 
         return solutions[initial.length()][target.length()];
+    }
+
+    private int min(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
     }
 }

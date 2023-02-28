@@ -1,8 +1,8 @@
 package algorithms;
 
+import java.util.ArrayList;
+
 public class IntuitiveImpl extends EditDistanceAlgorithm {
-
-
     private String removeLastChar(String s) {
         return s.substring(0, s.length() - 1);
     }
@@ -24,20 +24,22 @@ public class IntuitiveImpl extends EditDistanceAlgorithm {
 
         String initialSlice = removeLastChar(initial);
         String targetSlice = removeLastChar(target);
-        char lastCharInitial = lastChar(initial);
-        char lastCharTarget = lastChar(target);
 
-        if (lastCharInitial == lastCharTarget) {
+        if (lastChar(initial) == lastChar(target)) {
             return solve(initialSlice, targetSlice);
         } else {
-            String lastCharSwapped = initialSlice + lastCharTarget;
+            String lastCharSwapped = initialSlice + lastChar(target);
             int substitutionSwaps = solve(lastCharSwapped, target) + 1;
 
-            int insertSwaps = solve(initial + lastCharTarget, target) + 1;
+            int insertSwaps = solve(initial + lastChar(target), target) + 1;
 
             int deleteSwaps = solve(initialSlice, target) + 1;
 
-            return Math.min(Math.min(substitutionSwaps, insertSwaps), deleteSwaps);
+            return min(substitutionSwaps, insertSwaps, deleteSwaps);
         }
+    }
+
+    private int min(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
     }
 }

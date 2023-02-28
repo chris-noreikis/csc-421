@@ -4,10 +4,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertEquals;
 
 public class IntuitiveImplTest {
-    EditDistanceAlgorithm uut;
+    IntuitiveImpl uut;
     String initial;
     String target;
 
@@ -21,7 +23,7 @@ public class IntuitiveImplTest {
         System.out.println("initial = " + initial);
         System.out.println("target = " + target);
         System.out.println("invocations = " + uut.numInvocations());
-        System.out.println("memory = " + uut.peakMemoryConsumption() + '\n');
+        System.out.println("memory = " + uut.peakMemoryConsumption() / 1000 + "MB" + '\n');
     }
 
     @Test
@@ -40,8 +42,8 @@ public class IntuitiveImplTest {
 
     @Test
     public void testThree() {
-        initial = "intention";
+        initial = "intentionabcd";
         target = "execution";
-        assertEquals(5, uut.solve(initial, target));
+        assertEquals(6, uut.solve(initial, target));
     }
 }
