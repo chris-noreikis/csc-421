@@ -1,7 +1,5 @@
 package algorithms;
 
-import java.util.Arrays;
-
 public class DynamicImpl extends EditDistanceAlgorithm {
     public int solve(String initial, String target) {
         int[][] solutions = new int[initial.length() + 1][target.length() + 1];
@@ -18,16 +16,17 @@ public class DynamicImpl extends EditDistanceAlgorithm {
                 this.recordTelemetry();
                 char lastCharInitial = initial.charAt(i - 1);
                 char lastCharTarget = target.charAt(j - 1);
-                solutions[i][j] = min(
-                        solutions[i][j - 1] + 1,
-                        solutions[i - 1][j] + 1,
-                        solutions[i - 1][j - 1] + (lastCharInitial == lastCharTarget ? 0 : 1)
-                );
-            }
-        }
 
-        for (int i = 0; i < solutions.length; i++) {
-            System.out.println(Arrays.toString(solutions[i]));
+                if (lastCharInitial == lastCharTarget) {
+                    solutions[i][j] = solutions[i - 1][j - 1];
+                } else {
+                    solutions[i][j] = 1 + min(
+                            solutions[i][j - 1],
+                            solutions[i - 1][j],
+                            solutions[i - 1][j - 1]
+                    );
+                }
+            }
         }
 
         return solutions[initial.length()][target.length()];
